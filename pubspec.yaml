@@ -4,7 +4,7 @@ description: >-
   format of any image (network, asset, file, bytes, base64, SVG) and handles
   caching, retries, fallbacks, BlurHash, progressive loading, zoom, galleries,
   compression and transformations — with zero configuration.
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/vickyparajapati-flutter/smart_image_package
 issue_tracker: https://github.com/vickyparajapati-flutter/smart_image_package/issues
 documentation: https://github.com/vickyparajapati-flutter/smart_image_package#readme

@@ -36,11 +36,11 @@ the right renderer, caches it, and shows a placeholder while it loads — with
 
 | | Light | Dark |
 | --- | --- | --- |
-| **Sources** | <img src="screenshots/sources_light.png" width="240"/> | <img src="screenshots/sources_dark.png" width="240"/> |
-| **Features** | <img src="screenshots/features_light.png" width="240"/> | <img src="screenshots/features_dark.png" width="240"/> |
-| **Gallery** | <img src="screenshots/gallery_light.png" width="240"/> | <img src="screenshots/gallery_dark.png" width="240"/> |
-| **Tools** | <img src="screenshots/tools_light.png" width="240"/> | <img src="screenshots/tools_dark.png" width="240"/> |
-| **Cache** | <img src="screenshots/cache_light.png" width="240"/> | <img src="screenshots/cache_dark.png" width="240"/> |
+| **Sources** | <img src="https://raw.githubusercontent.com/vickyparajapati-flutter/smart_image_package/main/screenshots/sources_light.png" width="240"/> | <img src="https://raw.githubusercontent.com/vickyparajapati-flutter/smart_image_package/main/screenshots/sources_dark.png" width="240"/> |
+| **Features** | <img src="https://raw.githubusercontent.com/vickyparajapati-flutter/smart_image_package/main/screenshots/features_light.png" width="240"/> | <img src="https://raw.githubusercontent.com/vickyparajapati-flutter/smart_image_package/main/screenshots/features_dark.png" width="240"/> |
+| **Gallery** | <img src="https://raw.githubusercontent.com/vickyparajapati-flutter/smart_image_package/main/screenshots/gallery_light.png" width="240"/> | <img src="https://raw.githubusercontent.com/vickyparajapati-flutter/smart_image_package/main/screenshots/gallery_dark.png" width="240"/> |
+| **Tools** | <img src="https://raw.githubusercontent.com/vickyparajapati-flutter/smart_image_package/main/screenshots/tools_light.png" width="240"/> | <img src="https://raw.githubusercontent.com/vickyparajapati-flutter/smart_image_package/main/screenshots/tools_dark.png" width="240"/> |
+| **Cache** | <img src="https://raw.githubusercontent.com/vickyparajapati-flutter/smart_image_package/main/screenshots/cache_light.png" width="240"/> | <img src="https://raw.githubusercontent.com/vickyparajapati-flutter/smart_image_package/main/screenshots/cache_dark.png" width="240"/> |
 
 ---
 

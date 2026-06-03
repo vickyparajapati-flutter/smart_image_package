@@ -4,6 +4,11 @@ All notable changes to **SmartImageX** are documented here. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.1
+
+- Docs: use absolute image URLs in the README so the screenshots render on
+  pub.dev (relative paths are not resolved there). No code changes.
+
 ## 1.0.0
 
 Initial release — "one image widget for everything".
