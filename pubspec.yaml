@@ -36,29 +36,31 @@ dependencies:
     sdk: flutter
 
   # SVG rasterization / rendering.
-  flutter_svg: ^2.0.10
+  flutter_svg: ^2.3.0
 
   # Streamed network downloads with byte-level progress.
-  http: ^1.2.1
+  http: ^1.6.0
 
   # Cross-platform disk-cache directory resolution.
-  path_provider: ^2.1.3
+  path_provider: ^2.1.5
 
   # Stable, collision-resistant cache keys.
-  crypto: ^3.0.3
+  crypto: ^3.0.7
 
   # Connection-quality detection for the adaptive-quality engine.
-  connectivity_plus: ^6.0.3
+  connectivity_plus: ^7.1.1
 
   # Pure-Dart codec used by the compression / transform / metadata utilities.
-  image: ^4.2.0
+  # 4.9.x requires Dart >=3.11 (Flutter 3.44); 4.8.x is the latest compatible
+  # with this package's >=3.4 floor.
+  image: ^4.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^6.0.0
   # Used only by tests to fake the disk-cache directory without a real plugin.
-  path_provider_platform_interface: ^2.1.0
-  plugin_platform_interface: ^2.1.0
+  path_provider_platform_interface: ^2.1.2
+  plugin_platform_interface: ^2.1.8
 
 flutter:

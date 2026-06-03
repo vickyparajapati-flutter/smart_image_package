@@ -10,7 +10,7 @@
 /// configuration, the gallery/viewer widgets and the stand-alone
 /// [SmartImageTools] utilities) is re-exported here so applications never need
 /// to reach into `src/`.
-library smart_image_x;
+library;
 
 // Core widget and its render-phase enum.
 export 'src/widgets/smart_image.dart' show SmartImage, RenderPhase;
