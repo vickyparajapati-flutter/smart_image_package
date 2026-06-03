@@ -1,296 +1,180 @@
 import 'package:flutter/material.dart';
 import 'package:smart_image_x/smart_image_x.dart';
 
+import 'pages/cache_page.dart';
+import 'pages/features_page.dart';
+import 'pages/gallery_page.dart';
+import 'pages/sources_page.dart';
+import 'pages/tools_page.dart';
+
 void main() {
-  // Configure SmartImageX once at startup (entirely optional).
+  // Optional one-time configuration (everything works without it).
   SmartImageConfig.configure(
     const SmartImageConfig(
       cache: CacheConfig(maxMemoryBytes: 64 * 1024 * 1024),
       defaultRetry: RetryConfig(maxAttempts: 3),
-      logLevel: SmartImageLogLevel.info,
+      defaultLoaderType: LoaderType.shimmer,
+      logLevel: SmartImageLogLevel.warning,
     ),
   );
-  runApp(const ExampleApp());
+  runApp(const SmartImageXDemo());
 }
 
-/// Root of the demo application.
-class ExampleApp extends StatelessWidget {
-  const ExampleApp({super.key});
+/// Root of the SmartImageX showcase app.
+class SmartImageXDemo extends StatefulWidget {
+  const SmartImageXDemo({super.key});
+
+  @override
+  State<SmartImageXDemo> createState() => _SmartImageXDemoState();
+}
+
+class _SmartImageXDemoState extends State<SmartImageXDemo> {
+  ThemeMode _themeMode = ThemeMode.light;
+
+  void _toggleTheme() {
+    setState(() {
+      _themeMode =
+          _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
+
+  ThemeData _theme(Brightness brightness) {
+    return ThemeData(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: const Color(0xFF6750A4),
+        brightness: brightness,
+      ),
+      useMaterial3: true,
+      cardTheme: CardThemeData(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+          side: BorderSide(
+            color: brightness == Brightness.light
+                ? const Color(0x14000000)
+                : const Color(0x1FFFFFFF),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SmartImageX',
-      theme: ThemeData(colorSchemeSeed: Colors.indigo, useMaterial3: true),
-      darkTheme: ThemeData(
-        colorSchemeSeed: Colors.indigo,
-        brightness: Brightness.dark,
-        useMaterial3: true,
+      debugShowCheckedModeBanner: false,
+      themeMode: _themeMode,
+      theme: _theme(Brightness.light),
+      darkTheme: _theme(Brightness.dark),
+      home: HomeShell(
+        isDark: _themeMode == ThemeMode.dark,
+        onToggleTheme: _toggleTheme,
       ),
-      home: const HomeScreen(),
     );
   }
 }
 
-const _demoOne = 'https://picsum.photos/id/1015/600/400';
-const _demoTwo = 'https://picsum.photos/id/1025/600/400';
-const _demoThree = 'https://picsum.photos/id/1003/600/400';
-const _demoFour = 'https://picsum.photos/id/1044/600/400';
+/// The home scaffold: an app bar with a theme toggle and a bottom
+/// [NavigationBar] across the five demo sections.
+class HomeShell extends StatefulWidget {
+  const HomeShell({
+    required this.isDark,
+    required this.onToggleTheme,
+    super.key,
+  });
 
-const _demos = <String>[_demoOne, _demoTwo, _demoThree, _demoFour];
+  final bool isDark;
+  final VoidCallback onToggleTheme;
 
-/// A tabbed gallery of the package's headline capabilities.
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  @override
+  State<HomeShell> createState() => _HomeShellState();
+}
+
+class _HomeShellState extends State<HomeShell> {
+  int _index = 0;
+
+  static const _pages = [
+    SourcesPage(),
+    FeaturesPage(),
+    GalleryPage(),
+    ToolsPage(),
+    CachePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('SmartImageX'),
-          bottom: const TabBar(
-            isScrollable: true,
-            tabs: [
-              Tab(text: 'Basics'),
-              Tab(text: 'Shapes & States'),
-              Tab(text: 'Gallery & Zoom'),
-              Tab(text: 'Cache'),
-            ],
-          ),
-        ),
-        body: const TabBarView(
+    return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 16,
+        title: Row(
           children: [
-            _BasicsTab(),
-            _ShapesTab(),
-            _GalleryTab(),
-            _CacheTab(),
+            const SmartImage(image: 'assets/logo.svg', width: 28, height: 28),
+            const SizedBox(width: 10),
+            Text.rich(
+              TextSpan(
+                children: [
+                  const TextSpan(
+                    text: 'SmartImage',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  TextSpan(
+                    text: 'X',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _BasicsTab extends StatelessWidget {
-  const _BasicsTab();
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: const [
-        _SectionTitle('The simplest possible usage'),
-        AspectRatio(
-          aspectRatio: 3 / 2,
-          child: SmartImage(image: _demoOne),
-        ),
-        SizedBox(height: 24),
-        _SectionTitle('Progressive load with a BlurHash placeholder'),
-        AspectRatio(
-          aspectRatio: 3 / 2,
-          child: SmartImage(
-            image: 'https://picsum.photos/id/1062/800/600',
-            blurHash: r'L6PZfSi_.AyE_3t7t7R**0o#DgR4',
+        actions: [
+          IconButton(
+            tooltip: widget.isDark ? 'Light theme' : 'Dark theme',
+            onPressed: widget.onToggleTheme,
+            icon: Icon(widget.isDark ? Icons.light_mode : Icons.dark_mode),
           ),
-        ),
-        SizedBox(height: 24),
-        _SectionTitle('Inline SVG, auto-detected'),
-        SizedBox(
-          height: 120,
-          child: SmartImage(
-            image:
-                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">'
-                '<circle cx="50" cy="50" r="45" fill="#6750A4"/>'
-                '<path d="M30 52l14 14 26-30" stroke="white" stroke-width="8" '
-                'fill="none"/></svg>',
-          ),
-        ),
-        SizedBox(height: 24),
-        _SectionTitle('Bundled SVG asset (path auto-detected)'),
-        SizedBox(height: 120, child: SmartImage(image: 'assets/logo.svg')),
-      ],
-    );
-  }
-}
-
-class _ShapesTab extends StatelessWidget {
-  const _ShapesTab();
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        const _SectionTitle('Circle avatar'),
-        const Center(
-          child: SmartImage(
-            image: _demoTwo,
-            width: 120,
-            height: 120,
-            shape: BoxShape.circle,
-          ),
-        ),
-        const SizedBox(height: 24),
-        const _SectionTitle('Rounded rectangle + grayscale'),
-        Center(
-          child: SmartImage(
-            image: _demoThree,
-            width: 200,
-            height: 140,
-            borderRadius: BorderRadius.circular(16),
-            grayscale: true,
-          ),
-        ),
-        const SizedBox(height: 24),
-        const _SectionTitle('Error → fallback icon'),
-        const Center(
-          child: SmartImage(
-            image: 'https://invalid.example.invalid/missing.png',
-            width: 120,
-            height: 120,
-            retryCount: 1,
-            fallbackIcon: Icons.image_not_supported,
-          ),
-        ),
-        const SizedBox(height: 24),
-        const _SectionTitle('Error → fallback to a bundled asset'),
-        const Center(
-          child: SmartImage(
-            image: 'https://invalid.example.invalid/avatar.png',
-            width: 120,
-            height: 120,
-            shape: BoxShape.circle,
-            retryCount: 0,
-            fallbackImage: 'assets/avatar_placeholder.svg',
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _GalleryTab extends StatelessWidget {
-  const _GalleryTab();
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(12),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 12,
-        crossAxisSpacing: 12,
-      ),
-      itemCount: _demos.length,
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () => SmartImageGallery.open(
-            context,
-            images: _demos,
-            initialIndex: index,
-            heroTagBuilder: (i) => 'gallery-$i',
-          ),
-          child: Hero(
-            tag: 'gallery-$index',
-            child: SmartImage(
-              image: _demos[index],
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _CacheTab extends StatefulWidget {
-  const _CacheTab();
-
-  @override
-  State<_CacheTab> createState() => _CacheTabState();
-}
-
-class _CacheTabState extends State<_CacheTab> {
-  CacheStats? _stats;
-
-  Future<void> _refresh() async {
-    final stats = await SmartImage.cacheStats();
-    if (mounted) setState(() => _stats = stats);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final stats = _stats;
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (stats != null) ...[
-            _StatRow('Memory', '${stats.memoryCacheSizeMb.toStringAsFixed(2)} MB '
-                '(${stats.memoryEntryCount} entries)'),
-            _StatRow('Disk', '${stats.diskCacheSizeMb.toStringAsFixed(2)} MB '
-                '(${stats.diskFileCount} files)'),
-            _StatRow('Hit rate', '${(stats.hitRate * 100).toStringAsFixed(1)}%'),
-            _StatRow('Hits / Misses', '${stats.hitCount} / ${stats.missCount}'),
-          ] else
-            const Text('Tap "Refresh stats" to read the cache.'),
-          const Spacer(),
-          FilledButton.icon(
-            onPressed: _refresh,
-            icon: const Icon(Icons.analytics_outlined),
-            label: const Text('Refresh stats'),
-          ),
-          const SizedBox(height: 8),
-          OutlinedButton.icon(
-            onPressed: () => SmartImage.preloadAll(_demos),
-            icon: const Icon(Icons.download_outlined),
-            label: const Text('Preload all demo images'),
-          ),
-          const SizedBox(height: 8),
-          OutlinedButton.icon(
-            onPressed: () async {
-              await SmartImage.clearCache();
-              await _refresh();
-            },
-            icon: const Icon(Icons.delete_outline),
-            label: const Text('Clear cache'),
-          ),
+          const SizedBox(width: 4),
         ],
       ),
-    );
-  }
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle(this.text);
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Text(text, style: Theme.of(context).textTheme.titleMedium),
-    );
-  }
-}
-
-class _StatRow extends StatelessWidget {
-  const _StatRow(this.label, this.value);
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(label, style: Theme.of(context).textTheme.bodyLarge),
-          Text(value, style: Theme.of(context).textTheme.bodyLarge),
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 250),
+        child: KeyedSubtree(
+          key: ValueKey(_index),
+          child: _pages[_index],
+        ),
+      ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _index,
+        onDestinationSelected: (i) => setState(() => _index = i),
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.collections_outlined),
+            selectedIcon: Icon(Icons.collections),
+            label: 'Sources',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.auto_awesome_outlined),
+            selectedIcon: Icon(Icons.auto_awesome),
+            label: 'Features',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.photo_library_outlined),
+            selectedIcon: Icon(Icons.photo_library),
+            label: 'Gallery',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.build_outlined),
+            selectedIcon: Icon(Icons.build),
+            label: 'Tools',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.storage_outlined),
+            selectedIcon: Icon(Icons.storage),
+            label: 'Cache',
+          ),
         ],
       ),
     );

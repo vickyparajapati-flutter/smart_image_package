@@ -2,10 +2,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:smart_image_x_example/main.dart';
 
 void main() {
-  testWidgets('example app boots with its four demo tabs', (tester) async {
-    await tester.pumpWidget(const ExampleApp());
-    expect(find.text('SmartImageX'), findsOneWidget);
-    expect(find.text('Basics'), findsOneWidget);
-    expect(find.text('Gallery & Zoom'), findsOneWidget);
+  testWidgets('app boots with the five demo sections', (tester) async {
+    await tester.pumpWidget(const SmartImageXDemo());
+    // NavigationBar destination labels.
+    expect(find.text('Sources'), findsOneWidget);
+    expect(find.text('Features'), findsOneWidget);
+    expect(find.text('Gallery'), findsOneWidget);
+    expect(find.text('Tools'), findsOneWidget);
+    expect(find.text('Cache'), findsOneWidget);
   });
 }
