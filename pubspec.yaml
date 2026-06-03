@@ -1,0 +1,52 @@
+name: smart_image_x
+description: >-
+  One image widget for everything. SmartImageX auto-detects the source and
+  format of any image (network, asset, file, bytes, base64, SVG) and handles
+  caching, retries, fallbacks, BlurHash, progressive loading, zoom, galleries,
+  compression and transformations — with zero configuration.
+version: 1.0.0
+repository: https://github.com/vickypra/smart_image_package
+issue_tracker: https://github.com/vickypra/smart_image_package/issues
+documentation: https://github.com/vickypra/smart_image_package#readme
+topics:
+  - image
+  - cache
+  - svg
+  - blurhash
+  - widget
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # SVG rasterization / rendering.
+  flutter_svg: ^2.0.10
+
+  # Streamed network downloads with byte-level progress.
+  http: ^1.2.1
+
+  # Cross-platform disk-cache directory resolution.
+  path_provider: ^2.1.3
+
+  # Stable, collision-resistant cache keys.
+  crypto: ^3.0.3
+
+  # Connection-quality detection for the adaptive-quality engine.
+  connectivity_plus: ^6.0.3
+
+  # Pure-Dart codec used by the compression / transform / metadata utilities.
+  image: ^4.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  # Used only by tests to fake the disk-cache directory without a real plugin.
+  path_provider_platform_interface: ^2.1.0
+  plugin_platform_interface: ^2.1.0
+
+flutter:
