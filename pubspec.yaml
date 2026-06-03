@@ -5,9 +5,9 @@ description: >-
   caching, retries, fallbacks, BlurHash, progressive loading, zoom, galleries,
   compression and transformations — with zero configuration.
 version: 1.0.0
-repository: https://github.com/vickypra/smart_image_package
-issue_tracker: https://github.com/vickypra/smart_image_package/issues
-documentation: https://github.com/vickypra/smart_image_package#readme
+repository: https://github.com/vickyparajapati-flutter/smart_image_package
+issue_tracker: https://github.com/vickyparajapati-flutter/smart_image_package/issues
+documentation: https://github.com/vickyparajapati-flutter/smart_image_package#readme
 topics:
   - image
   - cache
