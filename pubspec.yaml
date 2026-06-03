@@ -15,6 +15,18 @@ topics:
   - blurhash
   - widget
 
+screenshots:
+  - description: "Auto-detected image sources, each explained."
+    path: screenshots/sources_light.png
+  - description: "Shapes, loaders, BlurHash, effects and the fallback chain."
+    path: screenshots/features_light.png
+  - description: "Swipeable, zoomable, hero-animated gallery."
+    path: screenshots/gallery_light.png
+  - description: "Built-in compress / resize / transform utilities."
+    path: screenshots/tools_light.png
+  - description: "Live two-tier cache statistics."
+    path: screenshots/cache_light.png
+
 environment:
   sdk: ">=3.4.0 <4.0.0"
   flutter: ">=3.22.0"
