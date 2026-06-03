@@ -4,6 +4,11 @@ All notable changes to **SmartImageX** are documented here. The format is based
 on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.2
+
+- Meta: shorten the package description to satisfy pub.dev's 180-character
+  limit (improves the pubspec.yaml pana score). No code changes.
+
 ## 1.0.1
 
 - Docs: use absolute image URLs in the README so the screenshots render on
